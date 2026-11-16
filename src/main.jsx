@@ -10,6 +10,10 @@ function post(msg) {
   try {
     window.ZendLiveness.postMessage(msg);
   } catch (_) {}
+  // Web: the app embeds this page in an iframe and listens for the result.
+  try {
+    if (window.parent !== window) window.parent.postMessage(msg, '*');
+  } catch (_) {}
 }
 
 function readPayload() {
